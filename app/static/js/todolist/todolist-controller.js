@@ -2,7 +2,7 @@
 
 angular.module('todotail')
     .controller('TodoListCtrl', function($scope, Restangular) {
-        Restangular.all('todos').getList().then(function(todos) {
+        Restangular.all('todo').getList().then(function(todos) {
             $scope.todos = todos;
         });
     });
