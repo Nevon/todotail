@@ -112,8 +112,8 @@ module.exports = function (grunt) {
                 livereload: true
             },
             less: {
-                files: '<%= appFolder %>src/**/*.less',
-                tasks: ['less']
+                files: '<%= appFolder %>src/less/**/*.less',
+                tasks: ['build:css']
             },
             jslib: {
                 files: '<%= appFolder %>lib/**/*.js',
@@ -132,7 +132,7 @@ module.exports = function (grunt) {
                 tasks: 'build:svg'
             }
         },
-        clean: ['<%= appFolder %>dist/', '<%= appFolder %>build/']
+        clean: ['<%= appFolder %>dist/', '<%= appFolder %>build/', '.tmp/']
     });
 
     // These plugins provide necessary tasks.
