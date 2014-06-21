@@ -3,7 +3,8 @@
 angular.module('todotail', [
     'ui.sortable',
     'restangular',
-    'lodash'
+    'lodash',
+    'ngAnimate'
 ]).config([
     'RestangularProvider',
     function (RestangularProvider) {

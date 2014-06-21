@@ -20,7 +20,7 @@
             </form>
 
             <ol class="tasks striped" ui-sortable="sortableOptions" ng-model="tasks">
-                <li ng-repeat="task in tasks" ng-class="{'done': task.done}">
+                <li ng-repeat="task in tasks" ng-class="{'done': task.done}" class="slide-right">
                     <input type="checkbox" ng-model="task.done" ng-change="doneChanged($index)"/>
                     <span class="title">{{ task.title }}</span>
                     <span class="svg-arrows move-handle"></span>
@@ -41,6 +41,7 @@
     <script src="lib/jquery-ui/ui/jquery.ui.mouse.js"></script>
     <script src="lib/jquery-ui/ui/jquery.ui.sortable.js"></script>
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
     <script src="lib/lodash/dist/lodash.js"></script>
     <script src="lib/restangular/dist/restangular.js"></script>
     <script src="lib/angular-ui-sortable/sortable.js"></script>

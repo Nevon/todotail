@@ -196,3 +196,53 @@ button.link {
     clip: rect(0,0,0,0);
     border: 0;
 }
+
+.slide-right {
+    transition: all 0 cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide-right.ng-enter {
+    transform: translateX(60px);
+    transition-duration: 250ms;
+    opacity: 0;
+}
+
+.slide-right.ng-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slide-right.ng-leave {
+  transform: translateX(0);
+  transition-duration: 250ms;
+  opacity: 1;
+}
+
+.slide-right.ng-leave-active {
+  transform: translateX(60px);
+  opacity: 0;
+}
+
+.slide-right.ng-hide-add {
+  transform: translateX(0);
+  transition-duration: 250ms;
+  opacity: 1;
+}
+
+.slide-right.ng-hide-add.ng-hide-add-active {
+  transform: translateX(60px);
+  opacity: 0;
+}
+
+.slide-right.ng-hide-remove {
+  transform: translateX(60px);
+  transition-duration: 250ms;
+  display: block !important;
+  opacity: 0;
+}
+
+.slide-right.ng-hide-remove.ng-hide-remove-active {
+  transform: translateX(0);
+  opacity: 1;
+}
