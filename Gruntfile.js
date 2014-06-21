@@ -17,6 +17,15 @@ module.exports = function (grunt) {
                         dest: '<%= appFolder %>dist/index.html'
                     }
                 ]
+            },
+            js: {
+                files: [{
+                    expand: true,
+                    flatten: true,
+                    src: '<%= appFolder %>src/js/**/*js',
+                    dest: '<%= appFolder %>build/js/',
+                    filter: 'isFile'
+                }]
             }
         },
         useminPrepare: {
@@ -82,9 +91,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= appFolder %>src/js',
+                    cwd: '<%= appFolder %>build/js',
                     src: '**/*.js',
-                    dest: '<%= appFolder %>src/js'
+                    dest: '<%= appFolder %>build/js'
                 }]
             }
         },
@@ -94,7 +103,7 @@ module.exports = function (grunt) {
                     sourceMap: true
                 },
                 files: {
-                    '<%= appFolder%>dist/js/main.min.js': ['<%= appFolder %>src/js/**/*.js']
+                    '<%= appFolder%>dist/js/main.min.js': ['<%= appFolder %>build/js/**/*.js']
                 }
             }
         },
@@ -123,7 +132,7 @@ module.exports = function (grunt) {
                 tasks: 'build:svg'
             }
         },
-        clean: ['<%= appFolder %>dist/']
+        clean: ['<%= appFolder %>dist/', '<%= appFolder %>build/']
     });
 
     // These plugins provide necessary tasks.
@@ -131,8 +140,8 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('build:html', ['useminPrepare', 'copy', 'usemin']);
-    grunt.registerTask('build:js', ['ngmin', 'uglify']);
-    grunt.registerTask('build:jslib', ['useminPrepare', 'copy', 'concat', 'usemin']);
+    grunt.registerTask('build:js', ['copy:js', 'ngmin', 'uglify']);
+    grunt.registerTask('build:jslib', ['useminPrepare', 'copy:dist', 'concat', 'usemin']);
     grunt.registerTask('build:svg', ['svgsprite', 'string-replace:sprite']);
     grunt.registerTask('build:css', ['less', 'autoprefixer']);
     grunt.registerTask('build:all', ['clean', 'useminPrepare', 'copy', 'concat', 'ngmin', 'uglify', 'build:css', 'build:svg', 'usemin']);

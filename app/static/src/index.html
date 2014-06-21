@@ -5,9 +5,8 @@
     <title>Todotail</title>
 
     <link rel="stylesheet" href="/css/main.css"/>
-    <link rel="stylesheet" href="/css/sprite.css"/>
 </head>
-<body ng-app="todotail">
+<body ng-app="todotail" ng-cloak>
 
     <div class="container">
         <header>
@@ -15,29 +14,35 @@
         </header>
 
         <div ng-controller="TodoListCtrl as ctrl">
-            <div class="input-group">
-                <button ng-click="ctrl.addTodo()">Add todo</button>
-                <span><label for="title" class="sr-only">Task title</label></for:class><input type="text" name="title" placeholder="What needs to be done?"/></span>
-            </div>
+            <form class="input-group" ng-submit="addTask()">
+                <button>Add todo</button>
+                <span><label for="title" class="sr-only">Task title</label></for:class><input type="text" name="title" placeholder="What needs to be done?" required ng-model="task.title"/></span>
+            </form>
 
-            <ol class="tasks striped">
-                <li ng-repeat="todo in todos" ng-class="{'done': todo.done}">
-                    <input type="checkbox" ng-model="todo.done"/>
-                    <span class="title">{{ todo.title }}</span>
+            <ol class="tasks striped" ui-sortable="sortableOptions" ng-model="tasks">
+                <li ng-repeat="task in tasks" ng-class="{'done': task.done}">
+                    <input type="checkbox" ng-model="task.done"/>
+                    <span class="title">{{ task.title }}</span>
                     <span class="svg-arrows move-handle"></span>
                 </li>
             </ol>
 
             <footer class="cf">
-                <span class="count"><ng-pluralize count="(todos | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
-                <button class="link right">Mark all as complete</button>
+                <span class="count"><ng-pluralize count="(tasks | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
+                <button class="link right" ng-click="markAllComplete()">Mark all as complete</button>
             </footer>
         </div>
     </div>
     <!-- build:js js/lib.js -->
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/lodash/dist/lodash.min.js"></script>
-    <script src="lib/restangular/dist/restangular.min.js"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/jquery-ui/ui/jquery.ui.core.js"></script>
+    <script src="lib/jquery-ui/ui/jquery.ui.widget.js"></script>
+    <script src="lib/jquery-ui/ui/jquery.ui.mouse.js"></script>
+    <script src="lib/jquery-ui/ui/jquery.ui.sortable.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/lodash/dist/lodash.js"></script>
+    <script src="lib/restangular/dist/restangular.js"></script>
+    <script src="lib/angular-ui-sortable/sortable.js"></script>
     <!-- endbuild -->
 
 

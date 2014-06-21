@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 
-from app import app
-app.run(debug = True)
+from app import app, db
+
+migrate = Migrate(app, db)
+
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
+if __name__ == '__main__':
+    app.debug = True
+    manager.run()

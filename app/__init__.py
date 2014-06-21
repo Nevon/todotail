@@ -9,5 +9,7 @@ db = SQLAlchemy(app)
 from app.models import todo
 from app.routes import index
 
+db.create_all()
+
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
-api_manager.create_api(todo.Todo, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(todo.Todo, methods=['GET', 'POST', 'DELETE', 'PUT'], allow_patch_many=True)

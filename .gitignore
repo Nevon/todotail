@@ -9,3 +9,5 @@ __pycache__
 app/static/dist/
 node_modules/
 .tmp/
+app/static/build/
+migrations/

@@ -29,7 +29,7 @@ A simple todo-application.
 
 5. Run the server
 
-    ./run.py
+    python run.py runserver
 
 Then go to `http://localhost:5000` in your web browser.
 
