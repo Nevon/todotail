@@ -3,8 +3,11 @@
 angular.module('todotail').controller('TodoListCtrl', [
     '$scope',
     'Restangular',
+    '_',
 
-    function ($scope, Restangular) {
+    function ($scope, Restangular, _) {
+        //@TODO: Abstract away the data handling to a service instead, so we don't have to worry about keeping
+        //$scope and the backend in sync within the controller.
         var Todo = Restangular.all('todo');
 
         Todo.getList().then(function (tasks) {
@@ -20,20 +23,15 @@ angular.module('todotail').controller('TodoListCtrl', [
                 stop: function(e, ui) {
                     for (var index in Restangular.stripRestangular($scope.tasks)) {
                         $scope.tasks[index].order = parseInt(index, 10);
+                        $scope.tasks[index].put();
                     }
                 }
             };
-
-            $scope.$watch('tasks', function (newValue, oldValue) {
-                if (newValue === oldValue) {
-                    return;
-                }
-
-                for (var index in Restangular.stripRestangular($scope.tasks)) {
-                    $scope.tasks[index].put();
-                }
-            }, true);
         });
+
+        $scope.doneChanged = function(index) {
+            $scope.tasks[index].put();
+        };
 
 
         // This is incredibly inefficient, but flask-restless seems to have
@@ -49,25 +47,36 @@ angular.module('todotail').controller('TodoListCtrl', [
         };
 
         $scope.addTask = function() {
+            // In order to add new items to the top of the list, we need to find the lowest order value and subtract one,
+            // since ui-sortable can't do orderBy
+            var lowestTask = _.min(Restangular.stripRestangular($scope.tasks), function(task) { return task.order; });
+            var order = (lowestTask.order === null) ? 0 : parseInt(lowestTask.order, 10)-1;
+
             Todo.post({
                 title: $scope.task.title,
-                done: false
+                done: false,
+                order: order
             }).then(function(response) {
-                $scope.tasks.push(response);
+                $scope.tasks.unshift(response);
+                $scope.task = null;
             });
         };
 
         $scope.deleteDone = function() {
             angular.forEach($scope.tasks, function(value, key) {
                 if (value.done === true) {
-                    $scope.delete(key);
+                    $scope.delete(value.id);
                 }
             });
         };
 
-        $scope.delete = function(index) {
-            $scope.tasks[index].remove().then(function() {
-                $scope.tasks.splice(index, 1);
+        $scope.delete = function(id) {
+            var taskToDelete = _.find($scope.tasks, function(task) {
+                return task.id === id;
+            });
+
+            taskToDelete.remove().then(function() {
+                $scope.tasks.splice($scope.tasks.indexOf(taskToDelete), 1);
             });
         }
     }

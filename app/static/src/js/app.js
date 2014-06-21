@@ -2,7 +2,8 @@
 
 angular.module('todotail', [
     'ui.sortable',
-    'restangular'
+    'restangular',
+    'lodash'
 ]).config([
     'RestangularProvider',
     function (RestangularProvider) {
