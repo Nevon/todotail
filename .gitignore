@@ -6,3 +6,6 @@
 todo.db
 .idea
 __pycache__
+app/static/dist/
+node_modules/
+.tmp/

@@ -1,0 +1,25 @@
+{
+  "name": "todotail",
+  "version": "0.0.0",
+  "description": "Simple todo application",
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-less": "^0.11.2",
+    "grunt-contrib-uglify": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ngmin": "0.0.3",
+    "grunt-usemin": "^2.2.0",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:Nevon/todotail"
+  },
+  "author": "Tommy Brunn",
+  "dependencies": {}
+}
