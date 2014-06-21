@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <title>Todotail</title>
 
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/sprite.css"/>
 </head>
-<body ng-app="todotail" ng-controller="TodoListCtrl as ctrl">
+<body ng-app="todotail">
 
-    <button ng-click="ctrl.addTodo()">Add todo</button>
-    <div ng-repeat="todo in todos">
-        {{ todo.title }}
+    <div class="container">
+        <header>
+            <h1>Todos</h1>
+        </header>
+
+        <div ng-controller="TodoListCtrl as ctrl">
+            <div class="input-group">
+                <button ng-click="ctrl.addTodo()">Add todo</button>
+                <span><label for="title" class="sr-only">Task title</label></for:class><input type="text" name="title" placeholder="What needs to be done?"/></span>
+            </div>
+
+            <ol class="tasks striped">
+                <li ng-repeat="todo in todos" ng-class="{'done': todo.done}">
+                    <input type="checkbox" ng-model="todo.done"/>
+                    <span class="title">{{ todo.title }}</span>
+                    <span class="svg-arrows move-handle"></span>
+                </li>
+            </ol>
+
+            <footer class="cf">
+                <span class="count"><ng-pluralize count="(todos | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
+                <button class="link right">Mark all as complete</button>
+            </footer>
+        </div>
     </div>
-
     <!-- build:js js/lib.js -->
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/lodash/dist/lodash.min.js"></script>

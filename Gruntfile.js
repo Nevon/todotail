@@ -30,11 +30,52 @@ module.exports = function (grunt) {
         },
         less: {
             options: {
-                paths: ['<%= appFolder %>src/less']
+                paths: ['<%= appFolder %>src/less'],
+                strictImports: true,
+                sourceMap: true
             },
             dist: {
-                src: ['<%= appFolder %>src/**/*.less'],
+                src: ['<%= appFolder %>src/less/main.less'],
                 dest: '<%= appFolder %>dist/css/main.css'
+            }
+        },
+        autoprefixer: {
+            options: {
+                map: true
+            },
+            dist: {
+                expand: true,
+                flatten: true,
+                src: '<%= appFolder %>dist/css/*.css',
+                dest: '<%= appFolder %>dist/css/'
+            }
+        },
+        svgsprite: {
+            options: {
+                render: {
+                    css: false,
+                    less: {
+                        dest: 'sprite'
+                    }
+                },
+                spritedir: ['../../dist/img']
+            },
+            dist: {
+                src: '<%= appFolder %>src/img/icons/',
+                dest: '<%= appFolder %>src/less/'
+            }
+        },
+        'string-replace': {
+            sprite: {
+                files: {
+                    '<%= appFolder %>src/less/sprite.less': '<%= appFolder %>src/less/sprite.less' //Hack to fix sprite path after compilation
+                },
+                options: {
+                    replacements: [{
+                        pattern: '../../dist/img/',
+                        replacement: '../img/'
+                    }]
+                }
             }
         },
         ngmin: {
@@ -72,6 +113,14 @@ module.exports = function (grunt) {
             js: {
                 files: '<%= appFolder %>src/js/**/*.js',
                 tasks: 'build:js'
+            },
+            html: {
+                files: '<%= appFolder %>src/index.html',
+                tasks: 'build:html'
+            },
+            svg: {
+                files: '<%= appFolder%>src/img/icons/*.svg',
+                tasks: 'build:svg'
             }
         },
         clean: ['<%= appFolder %>dist/']
@@ -81,9 +130,12 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Default task.
+    grunt.registerTask('build:html', ['useminPrepare', 'copy', 'usemin']);
     grunt.registerTask('build:js', ['ngmin', 'uglify']);
     grunt.registerTask('build:jslib', ['useminPrepare', 'copy', 'concat', 'usemin']);
-    grunt.registerTask('build:all', ['clean', 'useminPrepare', 'copy', 'concat', 'ngmin', 'uglify', 'less', 'usemin']);
+    grunt.registerTask('build:svg', ['svgsprite', 'string-replace:sprite']);
+    grunt.registerTask('build:css', ['less', 'autoprefixer']);
+    grunt.registerTask('build:all', ['clean', 'useminPrepare', 'copy', 'concat', 'ngmin', 'uglify', 'build:css', 'build:svg', 'usemin']);
     grunt.registerTask('default', ['build:all', 'watch']);
 
 };

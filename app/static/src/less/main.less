@@ -1,3 +1,193 @@
+@import "reset.less";
+@import "sprite.less";
+
+@text-color: #333;
+@text-color-disabled: #999999;
+
+@link-color: #448ccb;
+@link-hover-color: darken(@link-color, 10%);
+
+@button-link-disabled-color: #777;
+
+
+* {
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 body {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.3em;
     background: #f6f5f5;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 90px auto 0;
+    background: #fff;
+    border: 1px solid #e4e4e4;
+    border-radius: 5px;
+}
+
+header {
+    border-bottom: 1px dashed #d2d0d0;
+    padding: 50px 0;
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+    }
+}
+
+.input-group {
+    overflow: hidden;
+    padding: 20px;
+
+    input {
+        width: 100%;
+    }
+
+    span {
+        display: block;
+        overflow: hidden;
+        padding-right: 10px;
+    }
+
+    button {
+        float: right;
+    }
+
+    input,
+    button {
+        height: 40px;
+    }
+}
+
+input {
+    border: 1px solid #b7b6b6;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    background: #fefefe;
+}
+
+.striped {
+    li:nth-child(2n+1) {
+        background: #f4f7fa;
+    }
+}
+
+.tasks {
+    list-style: none;
+    min-height: 250px;
+
+    li {
+        background: #fff;
+        padding: 20px;
+        position: relative;
+        cursor: move;
+
+        &.done {
+            .title {
+                text-decoration: line-through;
+                color: @text-color-disabled;
+            }
+        }
+
+        .move-handle {
+            opacity: 0;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            height: 11px;
+            width: 8px;
+            transform: translateY(-5px);
+        }
+
+        &:hover {
+            .move-handle {
+                opacity: .2;
+            }
+        }
+    }
+}
+
+footer {
+    padding: 20px;
+    border-top: 1px dashed #d2d0d0;
+    font-size: 13px;
+
+    .count {
+        display: inline-block;
+        margin-top: 5px;
+    }
+}
+
+button.link {
+    color: @link-color;
+    font-weight: normal;
+    cursor: pointer;
+    border-radius: 0;
+
+    &,
+    &:active,
+    &[disabled],
+    fieldset[disabled] & {
+        background-color: transparent;
+        box-shadow: none;
+    }
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: transparent;
+    }
+    &:hover,
+    &:focus {
+        color: @link-hover-color;
+        text-decoration: underline;
+        background-color: transparent;
+    }
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus {
+            color: @button-link-disabled-color;
+            text-decoration: none;
+        }
+    }
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
 }
