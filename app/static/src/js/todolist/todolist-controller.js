@@ -21,11 +21,16 @@ angular.module('todotail').controller('TodoListCtrl', [
             //in the controller before assigning them to the scope.
             $scope.sortableOptions = {
                 stop: function(e, ui) {
-                    for (var index in Restangular.stripRestangular($scope.tasks)) {
-                        $scope.tasks[index].order = parseInt(index, 10);
-                        $scope.tasks[index].put();
+                    var tasksArr = Restangular.stripRestangular($scope.tasks);
+                    for (var index in tasksArr) {
+                        if (tasksArr.hasOwnProperty(index)) {
+                            $scope.tasks[index].order = parseInt(index, 10);
+                            $scope.tasks[index].put();
+                        }
                     }
-                }
+                },
+                axis: 'y',
+                handle: '.move-handle'
             };
         });
 
@@ -65,12 +70,12 @@ angular.module('todotail').controller('TodoListCtrl', [
         $scope.deleteDone = function() {
             angular.forEach($scope.tasks, function(value, key) {
                 if (value.done === true) {
-                    $scope.delete(value.id);
+                    $scope.deleteTask(value.id);
                 }
             });
         };
 
-        $scope.delete = function(id) {
+        $scope.deleteTask = function(id) {
             var taskToDelete = _.find($scope.tasks, function(task) {
                 return task.id === id;
             });
