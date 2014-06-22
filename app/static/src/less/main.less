@@ -34,7 +34,7 @@ body {
 .container {
     width: 100%;
     max-width: 500px;
-    margin: 90px auto 0;
+    margin: 0 auto;
     background: #fff;
     border: 1px solid #e4e4e4;
     border-radius: 5px;
@@ -201,14 +201,13 @@ input.styled-checkbox {
             display: inline-block;
             visibility: visible;
             left: 0;
-            top: 2px;
             width: 0.7em;
             height: 0.7em;
             margin: 0 .3em 0 -1em;
             line-height: .5;
             text-align: center;
             font-size: 22px;
-            position: relative;
+            position: absolute;
 
             background: linear-gradient(to bottom, #f7f5f3 0%,#e6e7e6 100%);
             box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12),
@@ -221,7 +220,6 @@ input.styled-checkbox {
 
     &:checked + label:before {
         content: '✔';
-        top: 1px;
         background: linear-gradient(to bottom, #288ab8 0%,#1b86b3 100%);
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12),
                     inset 0px 2px 0px -1px rgba(255, 255, 255, 0.5);
@@ -229,3 +227,5 @@ input.styled-checkbox {
         border: 1px solid #316281;
     }
 }
+
+@import "responsive.less";
