@@ -1,5 +1,7 @@
 'use strict';
 
+// @TODO: Add unit tests instead of relying on end-to-end tests.
+
 angular.module('todotail', [
     'ui.sortable',
     'restangular',
@@ -18,9 +20,9 @@ angular.module('todotail', [
                 newResponse = response.objects;
 
                 newResponse.metadata = {
-                    numResults: response.num_results,
+                    numResults: response.numResults,
                     page: response.page,
-                    totalPages: response.total_pages
+                    totalPages: response.totalPages
                 };
             } else {
                 newResponse = response;

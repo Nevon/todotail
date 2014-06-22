@@ -12,4 +12,6 @@ from app.routes import index
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
-api_manager.create_api(todo.Todo, methods=['GET', 'POST', 'DELETE', 'PUT'], allow_patch_many=True)
+# @TODO: Make allow_patch_many=True work, since that would reduce the cost of some bulk operations greatly.
+# @TODO: Create non-flask-restless endpoint for more complex bulk operations.
+api_manager.create_api(todo.Todo, methods=['GET', 'POST', 'DELETE', 'PUT'])

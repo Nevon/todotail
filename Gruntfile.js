@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     flatten: true,
-                    src: '<%= appFolder %>src/js/**/*js',
+                    src: '<%= appFolder %>src/js/**/*.js',
                     dest: '<%= appFolder %>build/js/',
                     filter: 'isFile'
                 }]
@@ -107,6 +107,14 @@ module.exports = function (grunt) {
                 }
             }
         },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            dist: ['<%= appFolder %>src/js/**/*.js'],
+            tests: ['test/**/*.js']
+        },
         watch: {
             options: {
                 livereload: true
@@ -137,10 +145,11 @@ module.exports = function (grunt) {
 
     // These plugins provide necessary tasks.
     require('load-grunt-tasks')(grunt);
+    grunt.loadNpmTasks('grunt-notify');
 
     // Default task.
     grunt.registerTask('build:html', ['useminPrepare', 'copy', 'usemin']);
-    grunt.registerTask('build:js', ['copy:js', 'ngmin', 'uglify']);
+    grunt.registerTask('build:js', ['jshint:dist', 'copy:js', 'ngmin', 'uglify']);
     grunt.registerTask('build:jslib', ['useminPrepare', 'copy:dist', 'concat', 'usemin']);
     grunt.registerTask('build:svg', ['svgsprite', 'string-replace:sprite']);
     grunt.registerTask('build:css', ['less', 'autoprefixer']);

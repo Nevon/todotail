@@ -1,3 +1,4 @@
+/*global describe: false, beforeEach:false, it:false, element:false, expect:false, by:false, browser:false*/
 'use strict';
 
 describe('Todotail', function() {
@@ -52,6 +53,6 @@ describe('Todotail', function() {
             getTasks().count().then(function(count) {
                 expect(element(by.css('.count')).getText()).toBe(count + ' items left');
             });
-        })
+        });
     });
 });
