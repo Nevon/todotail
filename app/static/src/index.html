@@ -20,7 +20,7 @@
             </form>
 
             <ol class="tasks striped" ui-sortable="sortableOptions" ng-model="tasks">
-                <li ng-repeat="task in tasks" ng-class="{'done': task.done}" class="bounce-horizontal">
+                <li ng-repeat="task in tasks track by task.id" ng-class="{'done': task.done}" class="bounce-horizontal">
                     <input type="checkbox" ng-model="task.done" name="done" id="done-{{task.id}}" class="styled-checkbox" ng-change="doneChanged(task.id)"/>
                     <label for="done-{{task.id}}"><span>{{ task.done === true ? 'Mark as not done' : 'Mark as done' }}</span></label>
                     <span class="title">{{ task.title }}</span>
