@@ -37,13 +37,17 @@ describe('Todotail', function() {
         });
 
         it('should be able to delete all completed tasks', function() {
+            var ptor = protractor.getInstance();
             var numberOfTasks = getTasks().count();
-            element(by.css('.delete-done')).click();
-
-            //Just to make sure that we had tasks to begin with
-            expect(getTasks().count()).toBeLessThan(numberOfTasks);
-
-            expect(getTasks().count()).toBe(0);
+            var tasks = element(by.css('ol.tasks'));
+            element(by.css('.delete-done')).click().then(function () {
+                browser.wait(function() {
+                    return tasks.isElementPresent(by.css('li')).then(function (present) {
+                        return !present;
+                    });
+                }, 3000);
+                expect(getTasks().count()).toBe(0);
+            });
         });
 
         it('should count the number of remaining tasks', function() {
