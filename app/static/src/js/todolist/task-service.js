@@ -3,8 +3,7 @@
 angular.module('todotail').factory('TaskService', [
     'Restangular',
     '$q',
-    '_',
-    function(Restangular, $q, _) {
+    function(Restangular, $q) {
         var TaskService = {};
         var Todo = Restangular.all('todo');
 
