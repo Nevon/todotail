@@ -80,9 +80,11 @@ angular.module('todotail').controller('TodoListCtrl', [
                 return task.id === id;
             });
 
-            taskToDelete.remove().then(function() {
-                $scope.tasks.splice($scope.tasks.indexOf(taskToDelete), 1);
-            });
+            if (taskToDelete) {
+                taskToDelete.remove().then(function() {
+                    $scope.tasks.splice($scope.tasks.indexOf(taskToDelete), 1);
+                });
+            }
         }
     }
 ]);
