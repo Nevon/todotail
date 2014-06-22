@@ -4,7 +4,7 @@
 @import "animations.less";
 
 @text-color: #333;
-@text-color-disabled: #999999;
+@text-color-disabled: lighten(@text-color, 40%);
 
 @link-color: #448ccb;
 @link-hover-color: darken(@link-color, 10%);
@@ -66,6 +66,26 @@ header {
 
     button {
         float: right;
+        box-shadow:inset 0px 40px 0px -20px #ebeae9;
+        background-color:#d9d8d7;
+        border-radius:5px;
+        border:1px solid #999999;
+        display:inline-block;
+        cursor:pointer;
+        color:#6a6969;
+        text-decoration:none;
+	    text-shadow:0px 1px 0px #ffffff;
+        font-weight: bold;
+        padding: 0 30px;
+
+        &:hover {
+            background-color:#d6d4d3;
+        }
+
+        &:active {
+            position:relative;
+            top:1px;
+        }
     }
 
     input,
@@ -130,6 +150,7 @@ footer {
     font-size: 13px;
 
     .count {
+        color: @text-color-disabled;
         display: inline-block;
         margin-top: 5px;
     }
@@ -148,6 +169,7 @@ button.link {
         background-color: transparent;
         box-shadow: none;
     }
+
     &,
     &:hover,
     &:focus,
@@ -155,12 +177,14 @@ button.link {
         border-color: transparent;
         outline: none;
     }
+
     &:hover,
     &:focus {
         color: @link-hover-color;
         text-decoration: underline;
         background-color: transparent;
     }
+
     &[disabled],
     fieldset[disabled] & {
         &:hover,
