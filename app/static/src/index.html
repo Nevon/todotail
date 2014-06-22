@@ -20,7 +20,7 @@
             </form>
 
             <ol class="tasks striped" ui-sortable="sortableOptions" ng-model="tasks">
-                <li ng-repeat="task in tasks" ng-class="{'done': task.done}" class="slide-right">
+                <li ng-repeat="task in tasks" ng-class="{'done': task.done}" class="bounce-horizontal">
                     <input type="checkbox" ng-model="task.done" name="done" id="done-{{task.id}}" class="styled-checkbox" ng-change="doneChanged(task.id)"/>
                     <label for="done-{{task.id}}"><span>{{ task.done === true ? 'Mark as not done' : 'Mark as done' }}</span></label>
                     <span class="title">{{ task.title }}</span>
@@ -30,8 +30,8 @@
 
             <footer>
                 <span class="count"><ng-pluralize count="(tasks | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
-                <button class="link right" ng-click="deleteDone()">Delete done</button>
-                <button class="link right" ng-click="markAllComplete()" ng-show="(tasks | filter:{done:false}).length > 0">Mark all as complete</button>
+                <button class="link right fade-vertical" ng-click="deleteDone()" ng-show="tasks.length > 0">Delete done</button>
+                <button class="link right fade-vertical" ng-click="markAllComplete()" ng-show="(tasks | filter:{done:false}).length > 0">Mark all as complete</button>
             </footer>
         </div>
     </div>

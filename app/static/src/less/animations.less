@@ -1,49 +1,79 @@
-.slide-right {
-    transition: all 0 cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+@keyframes bounceInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(2000px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(-30px);
+    }
+
+    80% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
-.slide-right.ng-enter {
-    transform: translateX(60px);
-    transition-duration: 250ms;
-    opacity: 0;
+@keyframes bounceOutRight {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(2000px);
+    }
 }
 
-.slide-right.ng-enter-active {
-    transform: translateX(0);
-    opacity: 1;
+.bounce-horizontal {
+    &.ng-enter {
+        animation: bounceInRight 500ms;
+    }
+    &.ng-leave {
+        animation: bounceOutRight 500ms;
+    }
 }
 
-.slide-right.ng-leave {
-  transform: translateX(0);
-  transition-duration: 250ms;
-  opacity: 1;
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.slide-right.ng-leave-active {
-  transform: translateX(60px);
-  opacity: 0;
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }
 
-.slide-right.ng-hide-add {
-  transform: translateX(0);
-  transition-duration: 250ms;
-  opacity: 1;
+.fade-vertical {
+    &.ng-hide-remove {
+        animation: fadeInUp 250ms;
+    }
+
+    &.ng-hide-add {
+      animation: fadeOutDown 250ms;
+    }
 }
 
-.slide-right.ng-hide-add.ng-hide-add-active {
-  transform: translateX(60px);
-  opacity: 0;
-}
-
-.slide-right.ng-hide-remove {
-  transform: translateX(60px);
-  transition-duration: 250ms;
-  display: block !important;
-  opacity: 0;
-}
-
-.slide-right.ng-hide-remove.ng-hide-remove-active {
-  transform: translateX(0);
-  opacity: 1;
-}
