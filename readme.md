@@ -45,4 +45,11 @@ An `angular` application is served from the `static` directory, which uses `rest
 
 The data is saved in an `sqlite` database in the root of the project. Since the application uses SQLAlchemy as its 
 database access layer, swapping out `sqlite` for something more robust should be fairly trivial.
-    
+
+## Testing
+
+Currently there are only end-to-end tests set up using Protractor. The tests are available in `/test/e2e/scenarios.js`
+
+In order to run the test suite, you need to have the server running (`python run.py runserver`) and then run:
+
+    npm run protractor

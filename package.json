@@ -17,12 +17,23 @@
     "grunt-string-replace": "^0.2.7",
     "grunt-svg-sprite": "^0.3.2",
     "grunt-usemin": "^2.2.0",
-    "load-grunt-tasks": "^0.6.0"
+    "load-grunt-tasks": "^0.6.0",
+    "protractor": "^0.24.2"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com:Nevon/todotail"
   },
   "author": "Tommy Brunn",
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+      "postinstall": "bower install",
+
+      "preupdate-webdriver": "npm install",
+      "update-webdriver": "webdriver-manager update",
+      "start-selenium": "webdriver-manager start",
+
+      "preprotractor": "npm run update-webdriver",
+      "protractor": "protractor test/protractor-conf.js"
+  }
 }

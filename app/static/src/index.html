@@ -14,7 +14,7 @@
         </header>
 
         <div ng-controller="TodoListCtrl as ctrl">
-            <form class="input-group" ng-submit="addTask()">
+            <form class="input-group add-task" ng-submit="addTask()">
                 <button>Add Todo</button>
                 <span><label for="title" class="sr-only">Task title</label></for:class><input type="text" name="title" placeholder="What needs to be done?" required ng-model="task.title"/></span>
             </form>
@@ -30,8 +30,8 @@
 
             <footer>
                 <span class="count"><ng-pluralize count="(tasks | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
-                <button class="link right fade-vertical" ng-click="deleteDone()" ng-show="tasks.length > 0">Delete done</button>
-                <button class="link right fade-vertical" ng-click="markAllComplete()" ng-show="(tasks | filter:{done:false}).length > 0">Mark all as complete</button>
+                <button class="link right fade-vertical delete-done" ng-click="deleteDone()" ng-show="tasks.length > 0">Delete done</button>
+                <button class="link right fade-vertical mark-all-as-complete" ng-click="markAllComplete()" ng-show="(tasks | filter:{done:false}).length > 0">Mark all as complete</button>
             </footer>
         </div>
     </div>
