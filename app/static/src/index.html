@@ -30,7 +30,7 @@
 
             <footer>
                 <span class="count"><ng-pluralize count="(tasks | filter:{done:false}).length" when="{'0': 'All done!', 'one': '1 item left', 'other': '{} items left'}"></ng-pluralize></span>
-                <button class="link right fade-vertical delete-done" ng-click="deleteDone()" ng-show="tasks.length > 0">Delete done</button>
+                <button class="link right fade-vertical delete-done" ng-click="deleteDone()" ng-show="(tasks | filter:{done:true}).length > 0">Clear completed ({{ (tasks | filter:{done:true}).length }})</button>
                 <button class="link right fade-vertical mark-all-as-complete" ng-click="markAllComplete()" ng-show="(tasks | filter:{done:false}).length > 0">Mark all as complete</button>
             </footer>
         </div>
