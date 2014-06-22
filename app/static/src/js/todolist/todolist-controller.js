@@ -2,15 +2,11 @@
 
 angular.module('todotail').controller('TodoListCtrl', [
     '$scope',
-    'Restangular',
+    'TaskService',
     '_',
 
-    function ($scope, Restangular, _) {
-        //@TODO: Abstract away the data handling to a service instead, so we don't have to worry about keeping
-        //$scope and the backend in sync within the controller.
-        var Todo = Restangular.all('todo');
-
-        Todo.getList().then(function (tasks) {
+    function ($scope, TaskService, _) {
+        TaskService.getList().then(function (tasks) {
             $scope.tasks = tasks;
 
             $scope.tasks.sort(function(a, b) {
@@ -21,11 +17,10 @@ angular.module('todotail').controller('TodoListCtrl', [
             //in the controller before assigning them to the scope.
             $scope.sortableOptions = {
                 stop: function(e, ui) {
-                    var tasksArr = Restangular.stripRestangular($scope.tasks);
-                    for (var index in tasksArr) {
-                        if (tasksArr.hasOwnProperty(index)) {
+                    for (var index in $scope.tasks) {
+                        if ($scope.tasks.hasOwnProperty(index)) {
                             $scope.tasks[index].order = parseInt(index, 10);
-                            $scope.tasks[index].put();
+                            TaskService.saveTask($scope.tasks[index]);
                         }
                     }
                 },
@@ -34,10 +29,15 @@ angular.module('todotail').controller('TodoListCtrl', [
             };
         });
 
-        $scope.doneChanged = function(index) {
-            $scope.tasks[index].put();
-        };
+        $scope.doneChanged = function(id) {
+            var taskChanged = _.find($scope.tasks, function(task) {
+                return task.id === id;
+            });
 
+            if (taskChanged) {
+                TaskService.saveTask(taskChanged);
+            }
+        };
 
         // This is incredibly inefficient, but flask-restless seems to have
         // an issue with updating multiple instances with one PUT/PATCH request.
@@ -47,17 +47,17 @@ angular.module('todotail').controller('TodoListCtrl', [
         $scope.markAllComplete = function() {
             angular.forEach($scope.tasks, function(value, key) {
                 value.done = true;
-                value.put();
+                TaskService.saveTask(value);
             });
         };
 
         $scope.addTask = function() {
             // In order to add new items to the top of the list, we need to find the lowest order value and subtract one,
             // since ui-sortable can't do orderBy
-            var lowestTask = _.min(Restangular.stripRestangular($scope.tasks), function(task) { return task.order; });
+            var lowestTask = _.min($scope.tasks, function(task) { return task.order; });
             var order = (lowestTask.order === null) ? 0 : parseInt(lowestTask.order, 10)-1;
 
-            Todo.post({
+            TaskService.addTask({
                 title: $scope.task.title,
                 done: false,
                 order: order
@@ -81,7 +81,7 @@ angular.module('todotail').controller('TodoListCtrl', [
             });
 
             if (taskToDelete) {
-                taskToDelete.remove().then(function() {
+                TaskService.deleteTask(taskToDelete).then(function() {
                     $scope.tasks.splice($scope.tasks.indexOf(taskToDelete), 1);
                 });
             }
