@@ -4,7 +4,7 @@ A simple todo-application.
 
 ## Requirements
 
-* `python` >= 3.3
+* `python` >= 2.6.0 && < 3.0.0
 * `pip`
 * `virtualenv`
 * `virtualenvwrapper` (recommended)
@@ -13,23 +13,28 @@ A simple todo-application.
 
 1. Clone the repo
 
-    git clone https://github.com/Nevon/todotail.git
+    $ git clone https://github.com/Nevon/todotail.git
 
 2. `cd` into it
 
-    cd todotail/
+    $ cd todotail/
 
 3. (Optional) Create a virtualenv
 
-    mkvirtualenv --no-site-packages todotail
+    $ mkvirtualenv todotail
 
 4. Install dependencies
 
-    pip install -r requirements.txt
+    $ pip install -r requirements.txt
+    $ npm install
 
-5. Run the server
+5. Build the static files
 
-    python run.py runserver
+    $ grunt build:all
+
+6. Run the server
+
+    $ python run.py runserver
 
 Then go to `http://localhost:5000` in your web browser.
 
